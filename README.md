@@ -4,7 +4,7 @@
 
 <h1 align="center">mindblow · site</h1>
 
-<p align="center">A página do <a href="https://github.com/mindblow-org/mindblow">mindblow</a>, feita para parecer o próprio app.</p>
+<p align="center">A página do <a href="https://github.com/mindblow-org/desktop">mindblow</a>, feita para parecer o próprio app.</p>
 
 O site é o grid do app: um sticky com o logo, a nota de download, notas curtas explicando o que é e um board com o passo a passo. Dá para arrastar os cards, fixar no alfinete, filtrar por tipo, abrir as notas em abas, criar um sticky no `+` e rabiscar no board. A nota "Experimente aqui" vai se marcando conforme a pessoa faz cada coisa.
 

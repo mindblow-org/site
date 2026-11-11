@@ -677,7 +677,7 @@
   })
 
   /* ------------------------------------------------------------ download */
-  const REPO = 'mindblow-org/mindblow'
+  const REPO = 'mindblow-org/desktop'
   const ASSETS = {
     appimage: (n) => n.endsWith('.AppImage'),
     deb: (n) => n.endsWith('.deb'),
