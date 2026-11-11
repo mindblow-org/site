@@ -81,7 +81,7 @@
           <article class="card text dl-card pinned" data-id="baixar" data-kind="text" data-title="Baixar" tabindex="0">
             <span class="acts"><button class="act on" data-act="pin" title="Desafixar" aria-label="Desafixar"><svg class="i sm"><use href="#pin"/></svg></button></span>
             <h3>Baixar</h3>
-            <p class="lede">Grátis e de código aberto, para Linux e Windows.</p>
+            <p class="lede">Grátis e de código aberto, para Linux, Windows e Android.</p>
             <a class="dl" data-asset="appimage" href="https://github.com/mindblow-org/desktop/releases/download/v0.1.0/mindblow_0.1.0_amd64.AppImage">
               <svg class="i"><use href="#download"/></svg>
               <span><b data-dl-label>Baixar para Linux</b><small><span data-dl-ext>.AppImage</span> · <span data-size="appimage">77 MB</span></small></span>
@@ -90,6 +90,7 @@
               <li data-alt="appimage" hidden><a data-asset="appimage" href="https://github.com/mindblow-org/desktop/releases/download/v0.1.0/mindblow_0.1.0_amd64.AppImage">Linux · .AppImage <span class="n" data-size="appimage">77 MB</span></a></li>
               <li data-alt="deb"><a data-asset="deb" href="https://github.com/mindblow-org/desktop/releases/download/v0.1.0/mindblow_0.1.0_amd64.deb">Linux · .deb <span class="n" data-size="deb">2,2 MB</span></a></li>
               <li data-alt="setup"><a data-asset="setup" href="https://github.com/mindblow-org/desktop/releases/download/v0.1.0/mindblow_0.1.0_x64-setup.exe">Windows · .exe <span class="n" data-size="setup">1,8 MB</span></a></li>
+              <li data-alt="apk"><a data-asset="apk" href="https://github.com/mindblow-org/android/releases/latest/download/mindblow-android.apk">Android · .apk <span class="n" data-size="apk">0,7 MB</span></a></li>
               <li><a href="#baixar">servidor e outras opções <svg class="i xs"><use href="#next"/></svg></a></li>
             </ul>
             <div class="foot"><svg class="i xs"><use href="#k-text"/></svg>texto · <span data-version>v0.1.0</span></div>
@@ -228,7 +229,7 @@ Nada passa por servidor de terceiros.</div>
     <article class="page surf">
       <div class="meta"><span class="k"><svg class="i xs"><use href="#k-text"/></svg>texto</span><span data-version>v0.1.0</span><span>MIT</span></div>
       <h1>Baixar o mindblow</h1>
-      <p>Grátis e de código aberto. Escolha o app desktop, que já traz o servidor, ou só o servidor para deixar numa máquina que fica ligada.</p>
+      <p>Grátis e de código aberto. Escolha o app desktop, que já traz o servidor, ou só o servidor para deixar numa máquina que fica ligada. No celular, o app Android conecta nesse servidor.</p>
 
       <h2>App desktop</h2>
       <ul class="rows">
@@ -237,6 +238,12 @@ Nada passa por servidor de terceiros.</div>
         <li><a data-asset="setup" href="https://github.com/mindblow-org/desktop/releases/download/v0.1.0/mindblow_0.1.0_x64-setup.exe"><b>Windows</b><span>instalador .exe</span><span class="n" data-size="setup">1,8 MB</span><svg class="i sm"><use href="#download"/></svg></a></li>
       </ul>
       <p class="small">O app abre o servidor em <code>localhost:7341</code>. Para usar outra máquina como servidor, veja <a href="https://github.com/mindblow-org/desktop/blob/main/docs/deploy.md#app-desktop">Deploy e configuração</a>.</p>
+
+      <h2>App Android</h2>
+      <ul class="rows">
+        <li><a data-asset="apk" href="https://github.com/mindblow-org/android/releases/latest/download/mindblow-android.apk"><b>Android</b><span>.apk</span><span class="n" data-size="apk">0,7 MB</span><svg class="i sm"><use href="#download"/></svg></a></li>
+      </ul>
+      <p class="small">Precisa do Android 9 ou mais novo e do Tailscale ligado no celular. Na primeira vez, o Android pede para liberar a instalação pelo navegador. Para conectar, leia o QR de "conectar outro aparelho" ou cole o link da tailnet. <a href="https://github.com/mindblow-org/android">Código do app</a>.</p>
 
       <h2>Servidor, com a interface embutida</h2>
       <ul class="rows">
@@ -252,7 +259,7 @@ cd desktop
 ./deploy/install.sh</pre>
 
       <h2>No celular</h2>
-      <p>Abra o link da tailnet no navegador e use "adicionar à tela inicial". Para conectar outro aparelho, o botão de QR no canto de cima do app mostra o código e quem está conectado agora.</p>
+      <p>No Android, instale o app acima. No iPhone, abra o link da tailnet no navegador e use "adicionar à tela inicial". Para conectar outro aparelho, o botão de QR do mindblow mostra o código e quem está conectado agora.</p>
       <p class="links"><a href="https://github.com/mindblow-org/desktop/releases">Todas as versões no GitHub</a></p>
     </article>
   </section>

@@ -677,20 +677,23 @@
   })
 
   /* ------------------------------------------------------------ download */
-  const REPO = 'mindblow-org/desktop'
+  // O app desktop e o servidor saem da repo desktop; o app Android, da repo android.
+  const REPOS = { desktop: 'mindblow-org/desktop', android: 'mindblow-org/android' }
   const ASSETS = {
-    appimage: (n) => n.endsWith('.AppImage'),
-    deb: (n) => n.endsWith('.deb'),
-    setup: (n) => n.endsWith('-setup.exe'),
-    'srv-linux-x64': (n) => n === 'mindblow-linux-x64',
-    'srv-linux-arm64': (n) => n === 'mindblow-linux-arm64',
-    'srv-win-x64': (n) => n === 'mindblow-windows-x64.exe',
+    appimage: ['desktop', (n) => n.endsWith('.AppImage')],
+    deb: ['desktop', (n) => n.endsWith('.deb')],
+    setup: ['desktop', (n) => n.endsWith('-setup.exe')],
+    'srv-linux-x64': ['desktop', (n) => n === 'mindblow-linux-x64'],
+    'srv-linux-arm64': ['desktop', (n) => n === 'mindblow-linux-arm64'],
+    'srv-win-x64': ['desktop', (n) => n === 'mindblow-windows-x64.exe'],
+    apk: ['android', (n) => n === 'mindblow-android.apk'],
   }
   const mb = (b) => `${(b / 1048576).toFixed(b < 10 * 1048576 ? 1 : 0).replace('.', ',')} MB`
 
   const os = (() => {
     const p = `${navigator.userAgentData?.platform ?? navigator.platform ?? ''} ${navigator.userAgent}`
-    if (/android|iphone|ipad|ipod/i.test(p) || (/mac/i.test(p) && navigator.maxTouchPoints > 1)) return 'phone'
+    if (/android/i.test(p)) return 'android'
+    if (/iphone|ipad|ipod/i.test(p) || (/mac/i.test(p) && navigator.maxTouchPoints > 1)) return 'phone'
     if (/win/i.test(p)) return 'win'
     if (/mac/i.test(p)) return 'mac'
     return 'linux'
@@ -700,7 +703,8 @@
     linux: ['appimage', 'Baixar para Linux', '.AppImage'],
     win: ['setup', 'Baixar para Windows', 'instalador .exe'],
     mac: [null, 'Downloads', 'sem versão para Mac ainda'],
-    phone: [null, 'Downloads', 'Linux e Windows'],
+    android: ['apk', 'Baixar para Android', '.apk'],
+    phone: [null, 'Downloads', 'Linux, Windows e Android'],
   }
 
   const card = cardOf('baixar')
@@ -721,9 +725,10 @@
   }
   for (const li of $$('[data-alt]', card)) li.hidden = li.dataset.alt === key
 
-  function release(r) {
-    for (const e of $$('[data-version]')) e.textContent = r.tag
-    for (const [k, test] of Object.entries(ASSETS)) {
+  function release(repo, r) {
+    if (repo === 'desktop') for (const e of $$('[data-version]')) e.textContent = r.tag
+    for (const [k, [from, test]] of Object.entries(ASSETS)) {
+      if (from !== repo) continue
       const a = r.assets.find((x) => test(x.name))
       if (!a) continue
       for (const el of $$(`[data-asset="${k}"]`)) el.href = a.url
@@ -731,15 +736,16 @@
     }
   }
 
-  const cached = keep.get('release', null)
-  if (cached?.tag) release(cached)
-  if (!cached || Date.now() - cached.at > 3600e3) {
-    fetch(`https://api.github.com/repos/${REPO}/releases/latest`, { headers: { Accept: 'application/vnd.github+json' } })
+  for (const [repo, path] of Object.entries(REPOS)) {
+    const cached = keep.get(`release:${repo}`, null)
+    if (cached?.tag) release(repo, cached)
+    if (cached && Date.now() - cached.at < 3600e3) continue
+    fetch(`https://api.github.com/repos/${path}/releases/latest`, { headers: { Accept: 'application/vnd.github+json' } })
       .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
       .then((j) => {
         const r = { at: Date.now(), tag: j.tag_name, assets: j.assets.map((a) => ({ name: a.name, url: a.browser_download_url, size: a.size })) }
-        keep.set('release', r)
-        release(r)
+        keep.set(`release:${repo}`, r)
+        release(repo, r)
       })
       .catch(() => {})
   }
