@@ -1,0 +1,465 @@
+<!doctype html>
+<html lang="pt-BR" class="nojs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>mindblow</title>
+<meta name="description" content="Notas minimalistas que moram numa máquina só e aparecem em todos os seus dispositivos pela tailnet. Sticky, texto, todo e board. Grátis e de código aberto.">
+<meta name="theme-color" content="#f2f2f0" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e0e0e" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="mindblow">
+<meta property="og:description" content="Notas minimalistas que moram numa máquina só e aparecem em todos os seus dispositivos pela tailnet.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://raw.githubusercontent.com/mindblow-org/mindblow/main/docs/images/grid-light.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="grid" viewBox="0 0 24 24"><path d="M4 4h6.5v6.5H4zM13.5 4H20v6.5h-6.5zM4 13.5h6.5V20H4zM13.5 13.5H20V20h-6.5z"/></symbol>
+  <symbol id="plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="x" viewBox="0 0 24 24"><path d="M7 7l10 10M17 7L7 17"/></symbol>
+  <symbol id="pin" viewBox="0 0 24 24"><path d="M12 16v5M8 3h8l-1 6 3 3v2H6v-2l3-3z"/></symbol>
+  <symbol id="check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="back" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></symbol>
+  <symbol id="next" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></symbol>
+  <symbol id="trash" viewBox="0 0 24 24"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3"/></symbol>
+  <symbol id="download" viewBox="0 0 24 24"><path d="M12 4v11M7 10.5l5 5 5-5M5 19.5h14"/></symbol>
+  <symbol id="code" viewBox="0 0 24 24"><path d="M9 7l-5 5 5 5M15 7l5 5-5 5"/></symbol>
+  <symbol id="k-sticky" viewBox="0 0 24 24"><path d="M5 5h14v9l-5 5H5z"/><path d="M14 19v-5h5"/></symbol>
+  <symbol id="k-text" viewBox="0 0 24 24"><path d="M5 6h14M5 10h14M5 14h14M5 18h8"/></symbol>
+  <symbol id="k-todo" viewBox="0 0 24 24"><path d="M8 4h8a4 4 0 0 1 4 4v8a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V8a4 4 0 0 1 4-4z"/><path d="M8.5 12.2l2.4 2.4 4.6-4.8"/></symbol>
+  <symbol id="k-board" viewBox="0 0 24 24"><path d="M7 4h10a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3z"/><path d="M7.5 14.5c1.4-3 2.8-3 4 0s2.6 3 4.5-1.5"/></symbol>
+  <symbol id="cursor" viewBox="0 0 24 24"><path d="M6 4.5l12 6.4-5.4 1.6-2.4 5.3z"/></symbol>
+  <symbol id="pen" viewBox="0 0 24 24"><path d="M4.5 19.5l1-4.2L15.8 5a2 2 0 0 1 2.9 0l.3.3a2 2 0 0 1 0 2.9L8.7 18.5z"/><path d="M14 7l3 3"/></symbol>
+  <symbol id="square" viewBox="0 0 24 24"><path d="M7 5h10a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"/></symbol>
+  <symbol id="circle" viewBox="0 0 24 24"><path d="M12 4.5a7.5 7.5 0 1 1 0 15a7.5 7.5 0 0 1 0-15z"/></symbol>
+  <symbol id="arrow" viewBox="0 0 24 24"><path d="M5.5 18.5l13-13"/><path d="M10 5.5h8.5V14"/></symbol>
+  <symbol id="undo" viewBox="0 0 24 24"><path d="M9 14l-5-5 5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-3"/></symbol>
+  <symbol id="redo" viewBox="0 0 24 24"><path d="M15 14l5-5-5-5"/><path d="M20 9H9a5 5 0 0 0 0 10h3"/></symbol>
+</svg>
+
+<header class="bar">
+  <a class="brand" href="./"><span class="mark"></span>mindblow</a>
+  <nav class="tabs" id="tabs" aria-label="Abas">
+    <button class="tab home on" data-tab="" aria-current="page"><svg class="i sm"><use href="#grid"/></svg><span class="t">Notas</span><span class="n" data-count="all">13</span></button>
+  </nav>
+  <button class="add" id="add" title="Novo sticky" aria-label="Novo sticky"><svg class="i"><use href="#plus"/></svg></button>
+  <div class="end">
+    <a class="find" href="https://github.com/mindblow-org/mindblow" title="Código no GitHub"><svg class="i sm"><use href="#code"/></svg><span>GitHub</span></a>
+    <div class="sync" title="Versão mais recente"><i></i><span data-version>v0.1.0</span></div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ============================================================ grid -->
+  <section class="view home" data-view="">
+    <div class="wall">
+      <div class="inner">
+        <div class="filter" role="toolbar" aria-label="Filtrar por tipo">
+          <button class="on" data-kind="all">Todas <span class="n" data-count="all">13</span></button>
+          <button data-kind="sticky">Sticky <span class="n" data-count="sticky">5</span></button>
+          <button data-kind="text">Texto <span class="n" data-count="text">6</span></button>
+          <button data-kind="todo">Todo <span class="n" data-count="todo">1</span></button>
+          <button data-kind="board">Board <span class="n" data-count="board">1</span></button>
+          <span class="hint">arraste para reorganizar · clique para abrir</span>
+        </div>
+
+        <div class="grid">
+          <div class="head" data-for="pin"><svg class="i xs"><use href="#pin"/></svg>Fixadas</div>
+          <div class="head" data-for="rest">Outras</div>
+
+          <article class="card sticky big pinned" data-id="mindblow" data-kind="sticky" data-span="2" data-title="mindblow" tabindex="0">
+            <span class="acts"><button class="act on" data-act="pin" title="Desafixar" aria-label="Desafixar"><svg class="i sm"><use href="#pin"/></svg></button></span>
+            <svg class="logo" viewBox="0 0 512 512" aria-hidden="true"><rect class="lb" width="512" height="512" rx="112"/><rect class="lf" x="150" y="150" width="190" height="190" rx="44"/><rect class="lo" x="200" y="200" width="190" height="190" rx="44" stroke-width="20" opacity=".55"/></svg>
+            <h1 class="word">mindblow</h1>
+            <p>notas que moram numa máquina só e aparecem em todos os seus aparelhos ✦</p>
+          </article>
+
+          <article class="card text dl-card pinned" data-id="baixar" data-kind="text" data-title="Baixar" tabindex="0">
+            <span class="acts"><button class="act on" data-act="pin" title="Desafixar" aria-label="Desafixar"><svg class="i sm"><use href="#pin"/></svg></button></span>
+            <h3>Baixar</h3>
+            <p class="lede">Grátis e de código aberto, para Linux e Windows.</p>
+            <a class="dl" data-asset="appimage" href="https://github.com/mindblow-org/mindblow/releases/download/v0.1.0/mindblow_0.1.0_amd64.AppImage">
+              <svg class="i"><use href="#download"/></svg>
+              <span><b data-dl-label>Baixar para Linux</b><small><span data-dl-ext>.AppImage</span> · <span data-size="appimage">77 MB</span></small></span>
+            </a>
+            <ul class="alt">
+              <li data-alt="appimage" hidden><a data-asset="appimage" href="https://github.com/mindblow-org/mindblow/releases/download/v0.1.0/mindblow_0.1.0_amd64.AppImage">Linux · .AppImage <span class="n" data-size="appimage">77 MB</span></a></li>
+              <li data-alt="deb"><a data-asset="deb" href="https://github.com/mindblow-org/mindblow/releases/download/v0.1.0/mindblow_0.1.0_amd64.deb">Linux · .deb <span class="n" data-size="deb">2,2 MB</span></a></li>
+              <li data-alt="setup"><a data-asset="setup" href="https://github.com/mindblow-org/mindblow/releases/download/v0.1.0/mindblow_0.1.0_x64-setup.exe">Windows · .exe <span class="n" data-size="setup">1,8 MB</span></a></li>
+              <li><a href="#baixar">servidor e outras opções <svg class="i xs"><use href="#next"/></svg></a></li>
+            </ul>
+            <div class="foot"><svg class="i xs"><use href="#k-text"/></svg>texto · <span data-version>v0.1.0</span></div>
+          </article>
+
+          <article class="card text pinned" data-id="o-que-e" data-kind="text" data-title="O que é" tabindex="0">
+            <span class="acts"><button class="act on" data-act="pin" title="Desafixar" aria-label="Desafixar"><svg class="i sm"><use href="#pin"/></svg></button></span>
+            <h3>O que é</h3>
+            <div class="body">Um app de notas minimalista. As notas ficam num servidor pequeno no seu computador, e o celular, o notebook e o PC do trabalho abrem tudo pela tailnet.
+
+Mudou num, aparece nos outros na hora. Sem conta e sem nuvem de ninguém.</div>
+            <div class="foot"><svg class="i xs"><use href="#k-text"/></svg>texto · agora</div>
+          </article>
+
+          <article class="card board pinned" data-id="como-funciona" data-kind="board" data-title="Como funciona" tabindex="0">
+            <span class="acts"><button class="act on" data-act="pin" title="Desafixar" aria-label="Desafixar"><svg class="i sm"><use href="#pin"/></svg></button></span>
+            <h3>Como funciona</h3>
+            <div class="thumb">
+              <svg viewBox="0 0 180 150" aria-hidden="true">
+                <g class="ink" fill="none" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                  <ellipse class="k3" cx="80" cy="80" rx="74" ry="56"/>
+                  <rect class="k2" x="22" y="48" width="38" height="17" rx="2"/>
+                  <rect class="k2" x="22" y="72" width="38" height="17" rx="2"/>
+                  <rect class="k2" x="22" y="96" width="38" height="17" rx="2"/>
+                  <rect class="k0" x="96" y="68" width="46" height="26" rx="2"/>
+                  <path class="k0" d="M64 57l28 16M64 81h28M64 105l28-16"/>
+                  <path class="k0" d="M88 70l4 3-5 1M88 81h4M87 90l5-1-4-3"/>
+                  <path class="k4" d="M98 100c8 2 16-2 24 0s12 1 18 0"/>
+                  <path class="k1" d="M150 122l-16-20M134 102l1 5M134 102l5 1"/>
+                </g>
+                <text class="k3" x="122" y="20" font-size="10">tailnet</text>
+                <text class="k1" x="128" y="136" font-size="8">uma máquina só</text>
+              </svg>
+            </div>
+            <div class="foot"><svg class="i xs"><use href="#k-board"/></svg>board · 3 passos</div>
+          </article>
+
+          <article class="card todo" data-id="experimente" data-kind="todo" data-title="Experimente aqui" tabindex="0">
+            <span class="acts"><button class="act" data-act="pin" title="Fixar" aria-label="Fixar"><svg class="i sm"><use href="#pin"/></svg></button></span>
+            <h3>Experimente aqui</h3>
+            <ul class="items">
+              <li data-quest="drag"><span class="box"><svg class="i"><use href="#check"/></svg></span><span>arrastar um card</span></li>
+              <li data-quest="pin"><span class="box"><svg class="i"><use href="#check"/></svg></span><span>fixar uma nota no alfinete</span></li>
+              <li data-quest="filter"><span class="box"><svg class="i"><use href="#check"/></svg></span><span>filtrar por tipo</span></li>
+              <li data-quest="board"><span class="box"><svg class="i"><use href="#check"/></svg></span><span>abrir o board</span></li>
+              <li data-quest="draw"><span class="box"><svg class="i"><use href="#check"/></svg></span><span>rabiscar no board</span></li>
+              <li data-quest="add"><span class="box"><svg class="i"><use href="#check"/></svg></span><span>criar um sticky no +</span></li>
+            </ul>
+            <div class="foot"><svg class="i xs"><use href="#k-todo"/></svg><span data-quests-n>0/6</span><span class="progress"><b data-quests-bar style="width:0"></b></span></div>
+          </article>
+
+          <article class="card sticky" data-id="sem-conta" data-kind="sticky" data-title="sem conta, sem nuvem" tabindex="0">
+            <span class="acts"><button class="act" data-act="pin" title="Fixar" aria-label="Fixar"><svg class="i sm"><use href="#pin"/></svg></button></span>
+            <p>sem conta, sem assinatura, sem nuvem de ninguém</p>
+          </article>
+
+          <article class="card text" data-id="tipos" data-kind="text" data-title="Quatro tipos de nota" tabindex="0">
+            <span class="acts"><button class="act" data-act="pin" title="Fixar" aria-label="Fixar"><svg class="i sm"><use href="#pin"/></svg></button></span>
+            <h3>Quatro tipos de nota</h3>
+            <div class="body">Sticky para o recado curto.
+
+Texto para o que é longo.
+
+Todo para listas, com progresso.
+
+Board para rabiscar e montar diagramas.</div>
+            <div class="foot"><svg class="i xs"><use href="#k-text"/></svg>texto · agora</div>
+          </article>
+
+          <article class="card sticky photo" data-id="no-celular" data-kind="sticky" data-title="no celular vira app" tabindex="0">
+            <span class="acts"><button class="act" data-act="pin" title="Fixar" aria-label="Fixar"><svg class="i sm"><use href="#pin"/></svg></button></span>
+            <img src="assets/mobile.png" alt="O grid do mindblow no celular" loading="lazy">
+            <p>no celular vira app na tela inicial</p>
+          </article>
+
+          <article class="card text" data-id="no-computador" data-kind="text" data-title="No computador" tabindex="0">
+            <span class="acts"><button class="act" data-act="pin" title="Fixar" aria-label="Fixar"><svg class="i sm"><use href="#pin"/></svg></button></span>
+            <div class="cover"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/grid-dark.png"><img src="assets/grid-light.png" alt="" loading="lazy"></picture><span class="more">+1</span></div>
+            <h3>No computador</h3>
+            <div class="body">Uma janela leve para Linux e Windows. Abas em cima, grid no meio e Ctrl+K busca em tudo.</div>
+            <div class="foot"><svg class="i xs"><use href="#k-text"/></svg>texto · agora</div>
+          </article>
+
+          <article class="card text" data-id="api" data-kind="text" data-title="Pela API" tabindex="0">
+            <span class="acts"><button class="act" data-act="pin" title="Fixar" aria-label="Fixar"><svg class="i sm"><use href="#pin"/></svg></button></span>
+            <h3>Pela API</h3>
+            <p class="lede">Outros apps criam, mudam e tiram notas por HTTP.</p>
+            <div class="body code">curl --json '{
+  "kind": "sticky",
+  "body": "backup ok"
+}' $MB/api/notes</div>
+            <div class="foot"><svg class="i xs"><use href="#k-text"/></svg>texto · agora</div>
+          </article>
+
+          <article class="card sticky" data-id="leve" data-kind="sticky" data-title="instalador leve" tabindex="0">
+            <span class="acts"><button class="act" data-act="pin" title="Fixar" aria-label="Fixar"><svg class="i sm"><use href="#pin"/></svg></button></span>
+            <p>o instalador do Windows tem <span data-size="setup">1,8 MB</span></p>
+          </article>
+
+          <article class="card text" data-id="seus-dados" data-kind="text" data-title="Seus dados" tabindex="0">
+            <span class="acts"><button class="act" data-act="pin" title="Fixar" aria-label="Fixar"><svg class="i sm"><use href="#pin"/></svg></button></span>
+            <h3>Seus dados</h3>
+            <div class="body">Tudo fica num arquivo SQLite no seu computador. Os outros aparelhos chegam pela tailnet, uma rede privada só sua.
+
+Nada passa por servidor de terceiros.</div>
+            <div class="foot"><svg class="i xs"><use href="#k-text"/></svg>texto · agora</div>
+          </article>
+
+          <article class="card sticky" data-id="stack" data-kind="sticky" data-title="Rust e Svelte" tabindex="0">
+            <span class="acts"><button class="act" data-act="pin" title="Fixar" aria-label="Fixar"><svg class="i sm"><use href="#pin"/></svg></button></span>
+            <p>Rust no servidor, Svelte na tela, Tauri na janela</p>
+          </article>
+        </div>
+
+        <footer class="colophon">
+          <span>mindblow · licença MIT</span>
+          <a href="https://github.com/mindblow-org/mindblow">github.com/mindblow-org/mindblow</a>
+        </footer>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ notas abertas -->
+  <section class="view doc" data-view="o-que-e" hidden>
+    <article class="page surf">
+      <div class="meta"><span class="k"><svg class="i xs"><use href="#k-text"/></svg>texto</span>editado agora</div>
+      <h1>O que é</h1>
+      <p>O mindblow é um app de notas minimalista: um grid com todas as notas, abas em cima e mais nada no caminho.</p>
+      <p>As notas moram numa máquina só, num servidor pequeno em Rust com SQLite. Os outros aparelhos chegam até ela pela tailnet do Tailscale. No computador ele abre numa janela própria, no celular vira app na tela inicial. Mudou num, aparece nos outros na hora.</p>
+      <p>Não tem conta, não tem assinatura e não tem nuvem de ninguém no meio. É código aberto, com licença MIT.</p>
+      <p class="links"><a href="#como-funciona">Ver no board como funciona</a><a href="#baixar">Baixar</a></p>
+    </article>
+  </section>
+
+  <section class="view doc" data-view="baixar" hidden>
+    <article class="page surf">
+      <div class="meta"><span class="k"><svg class="i xs"><use href="#k-text"/></svg>texto</span><span data-version>v0.1.0</span><span>MIT</span></div>
+      <h1>Baixar o mindblow</h1>
+      <p>Grátis e de código aberto. Escolha o app desktop, que já traz o servidor, ou só o servidor para deixar numa máquina que fica ligada.</p>
+
+      <h2>App desktop</h2>
+      <ul class="rows">
+        <li><a data-asset="appimage" href="https://github.com/mindblow-org/mindblow/releases/download/v0.1.0/mindblow_0.1.0_amd64.AppImage"><b>Linux</b><span>.AppImage</span><span class="n" data-size="appimage">77 MB</span><svg class="i sm"><use href="#download"/></svg></a></li>
+        <li><a data-asset="deb" href="https://github.com/mindblow-org/mindblow/releases/download/v0.1.0/mindblow_0.1.0_amd64.deb"><b>Linux</b><span>.deb</span><span class="n" data-size="deb">2,2 MB</span><svg class="i sm"><use href="#download"/></svg></a></li>
+        <li><a data-asset="setup" href="https://github.com/mindblow-org/mindblow/releases/download/v0.1.0/mindblow_0.1.0_x64-setup.exe"><b>Windows</b><span>instalador .exe</span><span class="n" data-size="setup">1,8 MB</span><svg class="i sm"><use href="#download"/></svg></a></li>
+      </ul>
+      <p class="small">O app abre o servidor em <code>localhost:7341</code>. Para usar outra máquina como servidor, veja <a href="https://github.com/mindblow-org/mindblow/blob/main/docs/deploy.md#app-desktop">Deploy e configuração</a>.</p>
+
+      <h2>Servidor, com a interface embutida</h2>
+      <ul class="rows">
+        <li><a data-asset="srv-linux-x64" href="https://github.com/mindblow-org/mindblow/releases/latest/download/mindblow-linux-x64"><b>Linux</b><span>x64</span><span class="n" data-size="srv-linux-x64">2,6 MB</span><svg class="i sm"><use href="#download"/></svg></a></li>
+        <li><a data-asset="srv-linux-arm64" href="https://github.com/mindblow-org/mindblow/releases/latest/download/mindblow-linux-arm64"><b>Linux</b><span>arm64</span><span class="n" data-size="srv-linux-arm64">2,6 MB</span><svg class="i sm"><use href="#download"/></svg></a></li>
+        <li><a data-asset="srv-win-x64" href="https://github.com/mindblow-org/mindblow/releases/latest/download/mindblow-windows-x64.exe"><b>Windows</b><span>x64</span><span class="n" data-size="srv-win-x64">2,6 MB</span><svg class="i sm"><use href="#download"/></svg></a></li>
+      </ul>
+
+      <h2>Instalar como serviço no Linux</h2>
+      <p>Compila, sobe o serviço e publica na tailnet. No fim, imprime o link para abrir nos outros aparelhos.</p>
+      <pre>git clone https://github.com/mindblow-org/mindblow
+cd mindblow
+./deploy/install.sh</pre>
+
+      <h2>No celular</h2>
+      <p>Abra o link da tailnet no navegador e use "adicionar à tela inicial". Para conectar outro aparelho, o botão de QR no canto de cima do app mostra o código e quem está conectado agora.</p>
+      <p class="links"><a href="https://github.com/mindblow-org/mindblow/releases">Todas as versões no GitHub</a></p>
+    </article>
+  </section>
+
+  <section class="view doc" data-view="tipos" hidden>
+    <article class="page surf">
+      <div class="meta"><span class="k"><svg class="i xs"><use href="#k-text"/></svg>texto</span>editado agora</div>
+      <h1>Quatro tipos de nota</h1>
+      <p>O formato do card já diz o tipo.</p>
+      <ul class="kinds">
+        <li><span class="kind-ico"><svg class="i"><use href="#k-sticky"/></svg></span><div><b>Sticky</b><p>Um quadrado cinza, como papel colado. Só texto curto, ou uma foto que vira polaroid.</p></div></li>
+        <li><span class="kind-ico"><svg class="i"><use href="#k-text"/></svg></span><div><b>Texto</b><p>Título e corpo, num card em pé do tamanho de meia folha A4.</p></div></li>
+        <li><span class="kind-ico"><svg class="i"><use href="#k-todo"/></svg></span><div><b>Todo</b><p>Título e itens com checkbox. O card mostra os primeiros itens e quanto já foi feito.</p></div></li>
+        <li><span class="kind-ico"><svg class="i"><use href="#k-board"/></svg></span><div><b>Board</b><p>Quadro branco com caneta, formas, setas, texto e imagens. Dá para selecionar vários, girar, copiar e colar.</p></div></li>
+      </ul>
+      <p>Qualquer nota aceita imagens: cole com Ctrl+V, arraste para cima dela ou use o botão de imagem. Fixe as importantes no alfinete e elas sobem para o topo do grid, em todos os aparelhos.</p>
+    </article>
+  </section>
+
+  <section class="view doc" data-view="no-computador" hidden>
+    <article class="page surf">
+      <div class="meta"><span class="k"><svg class="i xs"><use href="#k-text"/></svg>texto</span>2 imagens</div>
+      <h1>No computador</h1>
+      <div class="gal">
+        <picture class="tile big"><source media="(prefers-color-scheme: dark)" srcset="assets/grid-dark.png"><img src="assets/grid-light.png" alt="Grid do mindblow com stickies, textos, listas de tarefas e um board" loading="lazy"></picture>
+        <picture class="tile"><img src="assets/board.png" alt="Board com o diagrama do sync entre celular, notebook e servidor" loading="lazy"></picture>
+      </div>
+      <p>O app desktop para Linux e Windows abre o servidor local e mostra as notas numa janela própria. Cada nota aberta vira uma aba, e Ctrl+W fecha.</p>
+      <p>Qualquer nota pode virar uma janela separada, e essa janela pode ficar fixa por cima das outras.</p>
+      <p>Ctrl+K abre a busca de qualquer lugar, até no meio de uma nota. Ela procura no título, no corpo e nos itens, sem ligar para acento. Claro e escuro seguem o sistema.</p>
+    </article>
+  </section>
+
+  <section class="view doc" data-view="api" hidden>
+    <article class="page surf">
+      <div class="meta"><span class="k"><svg class="i xs"><use href="#k-text"/></svg>texto</span>editado agora</div>
+      <h1>Pela API</h1>
+      <p>A interface usa a mesma API REST que fica aberta para os seus scripts. JSON em tudo, na porta 7341.</p>
+      <pre># cria um sticky
+curl --json '{"kind":"sticky","body":"backup ok"}' \
+  $MB/api/notes
+
+# busca em todas as notas
+curl "$MB/api/notes?q=mercado"
+
+# marca um item de um todo
+curl -X PATCH --json '{"done":true}' \
+  $MB/api/notes/$ID/items/$ITEM</pre>
+      <p>As mudanças chegam aos aparelhos conectados por WebSocket, em <code>/api/live</code>. Se quiser, o servidor exige um token com <code>MINDBLOW_TOKEN</code>.</p>
+      <p class="links"><a href="https://github.com/mindblow-org/mindblow/blob/main/docs/api.md">Referência da API</a></p>
+    </article>
+  </section>
+
+  <section class="view doc" data-view="seus-dados" hidden>
+    <article class="page surf">
+      <div class="meta"><span class="k"><svg class="i xs"><use href="#k-text"/></svg>texto</span>editado agora</div>
+      <h1>Seus dados</h1>
+      <p>O servidor guarda as notas e as imagens num arquivo SQLite, na máquina em que ele roda: <code>~/.local/share/mindblow/mindblow.db</code>. Backup é copiar esse arquivo.</p>
+      <p>O acesso de fora passa pela tailnet do Tailscale, uma rede privada e criptografada em que só os seus aparelhos enxergam o servidor.</p>
+      <p>Para conectar um aparelho novo, o botão de QR no canto de cima mostra o código e a lista de quem está conectado agora.</p>
+    </article>
+  </section>
+
+  <section class="view doc" data-view="experimente" hidden>
+    <article class="page surf">
+      <div class="meta"><span class="k"><svg class="i xs"><use href="#k-todo"/></svg>todo</span><span data-quests-n>0/6</span></div>
+      <h1>Experimente aqui</h1>
+      <p>Esta página funciona como o app. Faça cada coisa e o item se marca sozinho.</p>
+      <ul class="checks">
+        <li data-quest="drag"><span class="box"><svg class="i"><use href="#check"/></svg></span><span>arrastar um card para outro lugar</span></li>
+        <li data-quest="pin"><span class="box"><svg class="i"><use href="#check"/></svg></span><span>fixar uma nota no alfinete do card</span></li>
+        <li data-quest="filter"><span class="box"><svg class="i"><use href="#check"/></svg></span><span>filtrar o grid por tipo</span></li>
+        <li data-quest="board"><span class="box"><svg class="i"><use href="#check"/></svg></span><span>abrir o board "Como funciona"</span></li>
+        <li data-quest="draw"><span class="box"><svg class="i"><use href="#check"/></svg></span><span>rabiscar alguma coisa no board</span></li>
+        <li data-quest="add"><span class="box"><svg class="i"><use href="#check"/></svg></span><span>criar um sticky no + lá em cima</span></li>
+      </ul>
+      <div class="prog"><span data-quests-n>0/6</span><span class="progress"><b data-quests-bar style="width:0"></b></span></div>
+      <p class="small">Seus stickies e rabiscos ficam só neste navegador.</p>
+    </article>
+  </section>
+
+  <!-- ============================================================ board -->
+  <section class="view bview" data-view="como-funciona" hidden>
+    <div class="board surf">
+      <header class="bhead">
+        <h2>Como funciona</h2>
+        <div class="meta"><span class="k"><svg class="i xs"><use href="#k-board"/></svg>board</span>3 passos</div>
+      </header>
+      <div class="btools">
+        <button class="ib" data-clear title="Apagar meus rabiscos" aria-label="Apagar meus rabiscos"><svg class="i"><use href="#trash"/></svg></button>
+      </div>
+
+      <div class="bbar" role="toolbar" aria-label="Ferramentas do board">
+        <button class="ib on" data-tool="select" title="Selecionar" aria-label="Selecionar" aria-pressed="true"><svg class="i"><use href="#cursor"/></svg></button>
+        <button class="ib" data-tool="pen" title="Caneta" aria-label="Caneta" aria-pressed="false"><svg class="i"><use href="#pen"/></svg></button>
+        <button class="ib" data-tool="rect" title="Retângulo" aria-label="Retângulo" aria-pressed="false"><svg class="i"><use href="#square"/></svg></button>
+        <button class="ib" data-tool="ellipse" title="Elipse" aria-label="Elipse" aria-pressed="false"><svg class="i"><use href="#circle"/></svg></button>
+        <button class="ib" data-tool="arrow" title="Seta" aria-label="Seta" aria-pressed="false"><svg class="i"><use href="#arrow"/></svg></button>
+        <i class="sep"></i>
+        <div class="tones">
+          <button class="tone on k0" data-tone="0" title="Cor 1" aria-label="Cor 1" aria-pressed="true"></button>
+          <button class="tone k1" data-tone="1" title="Cor 2" aria-label="Cor 2" aria-pressed="false"></button>
+          <button class="tone k2" data-tone="2" title="Cor 3" aria-label="Cor 3" aria-pressed="false"></button>
+          <button class="tone k3" data-tone="3" title="Cor 4" aria-label="Cor 4" aria-pressed="false"></button>
+          <button class="tone k4" data-tone="4" title="Cor 5" aria-label="Cor 5" aria-pressed="false"></button>
+        </div>
+        <i class="sep"></i>
+        <button class="ib" data-undo title="Desfazer  Ctrl+Z" aria-label="Desfazer" disabled><svg class="i"><use href="#undo"/></svg></button>
+        <button class="ib" data-redo title="Refazer  Ctrl+Shift+Z" aria-label="Refazer" disabled><svg class="i"><use href="#redo"/></svg></button>
+        <i class="sep z"></i>
+        <span class="zoom" data-zoom>100%</span>
+      </div>
+
+      <div class="stagebox">
+        <!-- tela larga -->
+        <svg class="scene wide" viewBox="0 0 1280 720" role="img" aria-label="Diagrama: o servidor fica numa máquina só, dentro da tailnet; celular, notebook e PC do trabalho se conectam a ele; outros apps usam a API.">
+          <g class="s">
+            <path class="k3" d="M560 140c262 0 482 116 482 262s-216 258-482 258S78 548 78 402s220-262 482-262z"/>
+            <rect class="k2" x="220" y="262" width="210" height="84" rx="4"/>
+            <rect class="k2" x="220" y="380" width="210" height="84" rx="4"/>
+            <rect class="k2" x="220" y="498" width="210" height="84" rx="4"/>
+            <rect class="k0" x="700" y="345" width="250" height="125" rx="4"/>
+            <path class="k0" d="M446 306l236 62M676 356l8 12-14 4"/>
+            <path class="k0" d="M446 422h236M670 413l12 9-12 9"/>
+            <path class="k0" d="M446 538l236-62M670 470l14 4-8 12"/>
+            <path class="k4" d="M705 492c40-6 70 6 110 0s80-4 130 2"/>
+            <path class="k1" d="M968 588l-62-96M904 492l2 16M904 492l14 8"/>
+            <rect class="k0" x="1085" y="372" width="170" height="74" rx="4"/>
+            <path class="k0" d="M1078 409H966M978 400l-12 9 12 9"/>
+          </g>
+          <g class="handles">
+            <rect x="696" y="341" width="8" height="8"/><rect x="946" y="341" width="8" height="8"/><rect x="696" y="466" width="8" height="8"/><rect x="946" y="466" width="8" height="8"/>
+          </g>
+          <g class="t">
+            <text class="k3" x="905" y="182" font-size="34" transform="rotate(5 905 182)">tailnet</text>
+            <text class="k0" x="250" y="311" font-size="24">celular</text>
+            <text class="k0 dim" x="250" y="333" font-size="15">vira app na tela inicial</text>
+            <text class="k0" x="250" y="429" font-size="24">notebook</text>
+            <text class="k0 dim" x="250" y="451" font-size="15">app desktop</text>
+            <text class="k0" x="250" y="547" font-size="24">PC do trabalho</text>
+            <text class="k0 dim" x="250" y="569" font-size="15">qualquer navegador</text>
+            <text class="k0" x="728" y="398" font-size="26">servidor</text>
+            <text class="k0" x="728" y="432" font-size="26">Rust + SQLite</text>
+            <text class="k1" x="930" y="625" font-size="22" transform="rotate(-4 930 625)">uma máquina só</text>
+            <text class="k1" x="930" y="652" font-size="22" transform="rotate(-4 930 652)">guarda tudo</text>
+            <text class="k4" x="470" y="625" font-size="19" transform="rotate(-2 470 625)">mudou num, aparece em todos na hora</text>
+            <text class="k0" x="1105" y="404" font-size="20">outros apps</text>
+            <text class="k0 dim" x="1105" y="428" font-size="15">API REST</text>
+          </g>
+          <g class="steps">
+            <g transform="translate(712 300)"><circle r="17"/><text y="6" font-size="17">1</text></g>
+            <text class="k0 note" x="740" y="307" font-size="18">instale num PC sempre ligado</text>
+            <g transform="translate(862 118)"><circle r="17"/><text y="6" font-size="17">2</text></g>
+            <text class="k0 note" x="890" y="125" font-size="19">o install.sh publica na tailnet</text>
+            <g transform="translate(244 222)"><circle r="17"/><text y="6" font-size="17">3</text></g>
+            <text class="k0 note" x="272" y="229" font-size="19">abra o link ou leia o QR</text>
+          </g>
+          <g class="ink"></g>
+        </svg>
+
+        <!-- tela em pé -->
+        <svg class="scene tall" viewBox="0 0 390 820" role="img" aria-label="Diagrama: o servidor fica numa máquina só; celular, notebook e PC do trabalho se conectam a ele pela tailnet.">
+          <g class="s">
+            <rect class="k0" x="90" y="92" width="210" height="104" rx="4"/>
+            <path class="k4" d="M96 214c30-5 52 5 82 0s62-4 116 2"/>
+            <path class="k3" d="M195 330c96 0 175 96 175 214s-79 214-175 214S20 662 20 544s79-214 175-214z"/>
+            <rect class="k2" x="105" y="400" width="180" height="70" rx="4"/>
+            <rect class="k2" x="105" y="500" width="180" height="70" rx="4"/>
+            <rect class="k2" x="105" y="600" width="180" height="70" rx="4"/>
+            <path class="k0" d="M195 392V228M186 240l9-12 9 12"/>
+          </g>
+          <g class="handles">
+            <rect x="86" y="88" width="8" height="8"/><rect x="296" y="88" width="8" height="8"/><rect x="86" y="192" width="8" height="8"/><rect x="296" y="192" width="8" height="8"/>
+          </g>
+          <g class="t">
+            <text class="k0" x="114" y="138" font-size="24">servidor</text>
+            <text class="k0" x="114" y="170" font-size="24">Rust + SQLite</text>
+            <text class="k1" x="214" y="250" font-size="17" transform="rotate(-3 214 250)">uma máquina só</text>
+            <text class="k1" x="214" y="271" font-size="17" transform="rotate(-3 214 271)">guarda tudo</text>
+            <text class="k4" x="34" y="252" font-size="15" transform="rotate(-2 34 252)">mudou num,</text>
+            <text class="k4" x="34" y="271" font-size="15" transform="rotate(-2 34 271)">aparece em todos</text>
+            <text class="k3" x="268" y="372" font-size="26" transform="rotate(6 268 372)">tailnet</text>
+            <text class="k0" x="125" y="434" font-size="20">celular</text>
+            <text class="k0 dim" x="125" y="456" font-size="13">vira app na tela inicial</text>
+            <text class="k0" x="125" y="534" font-size="20">notebook</text>
+            <text class="k0 dim" x="125" y="556" font-size="13">app desktop</text>
+            <text class="k0" x="125" y="634" font-size="20">PC do trabalho</text>
+            <text class="k0 dim" x="125" y="656" font-size="13">qualquer navegador</text>
+          </g>
+          <g class="steps">
+            <g transform="translate(36 54)"><circle r="15"/><text y="5" font-size="15">1</text></g>
+            <text class="k0 note" x="60" y="60" font-size="17">instale num PC sempre ligado</text>
+            <g transform="translate(36 318)"><circle r="15"/><text y="5" font-size="15">2</text></g>
+            <text class="k0 note" x="14" y="352" font-size="15">publique</text>
+            <text class="k0 note" x="14" y="370" font-size="15">na tailnet</text>
+            <g transform="translate(36 790)"><circle r="15"/><text y="5" font-size="15">3</text></g>
+            <text class="k0 note" x="60" y="796" font-size="17">abra o link ou leia o QR</text>
+          </g>
+          <g class="ink"></g>
+        </svg>
+      </div>
+
+      <div class="bfoot">escolha a caneta e rabisque à vontade · fica só neste navegador</div>
+    </div>
+  </section>
+
+</main>
+<script src="app.js"></script>
+</body>
+</html>
