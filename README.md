@@ -29,7 +29,7 @@ Cada nota abre por link: `#baixar`, `#como-funciona`, `#o-que-e`.
 
 ## Download
 
-A nota de download escolhe o instalador pelo sistema (AppImage no Linux, `-setup.exe` no Windows) e busca a release mais recente na API do GitHub para atualizar links, tamanhos e versão, com cache de uma hora. Sem rede, ficam os links da v0.1.0 escritos no HTML.
+A nota de download escolhe o instalador pelo sistema (AppImage no Linux, `-setup.exe` no Windows) e busca a release mais recente na API do GitHub para atualizar links, tamanhos e versão, com cache de uma hora. Sem rede, ficam os links da v0.2.0 escritos no HTML.
 
 ## Publicar
 
